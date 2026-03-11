@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://cfg5b7taj8dwq" path="res://assets/Tiles/Characters/tile_0021.png" id="2_6iv21"]
 [ext_resource type="Texture2D" uid="uid://d24ggkpo6qgfw" path="res://assets/Tiles/Characters/tile_0022.png" id="3_paybi"]
 [ext_resource type="Texture2D" uid="uid://2cimx2h552qw" path="res://assets/Tiles/Characters/tile_0023.png" id="4_b43al"]
+[ext_resource type="AudioStream" uid="uid://bhq04sajl3ijk" path="res://assets/Sounds/stump.mp3" id="5_wo02w"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ejd8y"]
 animations = [{
@@ -31,14 +32,13 @@ animations = [{
 size = Vector2(24, 20)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2gm4t"]
-size = Vector2(22, 1)
+size = Vector2(20, 1)
 
 [node name="blueEnemy" type="Node2D" unique_id=2046910839]
 script = ExtResource("1_eaaat")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1617511611]
 sprite_frames = SubResource("SpriteFrames_ejd8y")
-animation = &"stun"
 autoplay = "default"
 
 [node name="killzone" type="Area2D" parent="." unique_id=339164384]
@@ -58,8 +58,12 @@ target_position = Vector2(-18, 0)
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="stunzone" unique_id=281418581]
-position = Vector2(0, -9)
+position = Vector2(0, -8)
 shape = SubResource("RectangleShape2D_2gm4t")
+
+[node name="StumpSound" type="AudioStreamPlayer2D" parent="." unique_id=321774793]
+stream = ExtResource("5_wo02w")
+pitch_scale = 2.0
 
 [connection signal="body_entered" from="killzone" to="." method="_on_killzone_body_entered"]
 [connection signal="body_entered" from="stunzone" to="." method="_on_stunzone_body_entered"]

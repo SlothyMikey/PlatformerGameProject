@@ -1,15 +1,22 @@
 [gd_scene format=3 uid="uid://dhskym07is6fg"]
 
 [ext_resource type="Script" uid="uid://l5l055uqvyne" path="res://scripts/enemies/fly_enemy.gd" id="1_vnj8v"]
-[ext_resource type="Texture2D" uid="uid://cfg5b7taj8dwq" path="res://assets/Tiles/Characters/tile_0021.png" id="2_o1s7y"]
-[ext_resource type="Texture2D" uid="uid://d24ggkpo6qgfw" path="res://assets/Tiles/Characters/tile_0022.png" id="3_hx62b"]
+[ext_resource type="Texture2D" uid="uid://dm6m8vqm2detr" path="res://assets/Tiles/Characters/tile_0024.png" id="2_o1s7y"]
+[ext_resource type="Texture2D" uid="uid://iogo7qw7h2ge" path="res://assets/Tiles/Characters/tile_0025.png" id="3_hx62b"]
 [ext_resource type="Texture2D" uid="uid://2cimx2h552qw" path="res://assets/Tiles/Characters/tile_0023.png" id="4_khmd6"]
+[ext_resource type="Texture2D" uid="uid://dndp3t04v1e4t" path="res://assets/Tiles/Characters/tile_0026.png" id="4_sf6jr"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_34552"]
 animations = [{
 "frames": [{
 "duration": 1.0,
 "texture": ExtResource("2_o1s7y")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_hx62b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_sf6jr")
 }, {
 "duration": 1.0,
 "texture": ExtResource("3_hx62b")
@@ -27,36 +34,28 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ahhab"]
-size = Vector2(24, 21)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_luopk"]
-size = Vector2(18, 1)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_o1s7y"]
+size = Vector2(22, 15)
 
 [node name="fly_enemy" type="Node2D" unique_id=1757338939]
 script = ExtResource("1_vnj8v")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1323335848]
 sprite_frames = SubResource("SpriteFrames_34552")
-animation = &"stun"
 autoplay = "default"
+frame_progress = 0.15150167
 
 [node name="killzone" type="Area2D" parent="." unique_id=449774512]
 collision_mask = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="killzone" unique_id=586963926]
-position = Vector2(0, 1.5)
-shape = SubResource("RectangleShape2D_ahhab")
+position = Vector2(-1, 1.5)
+shape = SubResource("RectangleShape2D_o1s7y")
 
 [node name="RayCastRight" type="RayCast2D" parent="." unique_id=369387252]
-target_position = Vector2(18, 0)
+target_position = Vector2(16, 0)
 
 [node name="RayCastLeft" type="RayCast2D" parent="." unique_id=496810126]
 target_position = Vector2(-18, 0)
 
-[node name="stunzone" type="Area2D" parent="." unique_id=295904577]
-collision_mask = 2
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="stunzone" unique_id=762701069]
-position = Vector2(0, -9.5)
-shape = SubResource("RectangleShape2D_luopk")
+[connection signal="body_entered" from="killzone" to="." method="_on_killzone_body_entered"]

@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://bq4c05edy3li4" path="res://scripts/objects/coin.gd" id="1_rdkb7"]
 [ext_resource type="Texture2D" uid="uid://cpu4fkgnil8f6" path="res://assets/Tiles/tile_0151.png" id="2_1x375"]
 [ext_resource type="Texture2D" uid="uid://dil1eerk2cwdl" path="res://assets/Tiles/tile_0152.png" id="3_47asi"]
+[ext_resource type="AudioStream" uid="uid://cda44qdwcnumj" path="res://assets/Sounds/coin.wav" id="4_v6le6"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_0rb1r"]
 animations = [{
@@ -32,5 +33,9 @@ frame_progress = 0.43866387
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1472534484]
 shape = SubResource("CircleShape2D_0lo1o")
+
+[node name="PickupSound" type="AudioStreamPlayer2D" parent="." unique_id=1915828557]
+stream = ExtResource("4_v6le6")
+volume_db = -10.0
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

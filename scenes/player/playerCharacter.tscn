@@ -8,6 +8,9 @@
 [ext_resource type="Texture2D" uid="uid://b0ldwk8v3uycu" path="res://assets/Tiles/tile_0045.png" id="6_5auh5"]
 [ext_resource type="Texture2D" uid="uid://b8no78dv6y054" path="res://assets/Tiles/tile_0046.png" id="7_r7e07"]
 [ext_resource type="Texture2D" uid="uid://cpu4fkgnil8f6" path="res://assets/Tiles/tile_0151.png" id="8_r7e07"]
+[ext_resource type="AudioStream" uid="uid://bwdadofq4seed" path="res://assets/Sounds/oof.mp3" id="9_82prv"]
+[ext_resource type="AudioStream" uid="uid://dcf7eeavsg0u0" path="res://assets/Sounds/jump.wav" id="9_s3gtt"]
+[ext_resource type="AudioStream" uid="uid://dq8ckryqh21p6" path="res://assets/Sounds/death.wav" id="10_wh5ob"]
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_dqkch"]
 animations = [{
@@ -38,6 +41,20 @@ animations = [{
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_dqkch"]
 height = 24.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8qkna"]
+bg_color = Color(0, 0.72741455, 0.11352586, 1)
+border_color = Color(0.99976355, 0.99410397, 0.9944443, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s3gtt"]
+bg_color = Color(6.738305e-07, 0.7218168, 0.25129366, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wh5ob"]
+bg_color = Color(0, 0.463713, 0.16178647, 1)
 
 [node name="PlayerCharacter" type="CharacterBody2D" unique_id=1325053088]
 scale = Vector2(-1, 1)
@@ -98,7 +115,62 @@ theme_override_constants/outline_size = 10
 theme_override_font_sizes/font_size = 32
 text = "0"
 
+[node name="GameOverScreen" type="ColorRect" parent="UI" unique_id=935325938]
+process_mode = 3
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.5882353)
+
+[node name="Label" type="Label" parent="UI/GameOverScreen" unique_id=961171695]
+layout_mode = 0
+offset_left = 198.0
+offset_top = 206.0
+offset_right = 932.0
+offset_bottom = 398.0
+theme_override_font_sizes/font_size = 128
+text = "GAME OVER"
+
+[node name="Restart" type="Button" parent="UI/GameOverScreen" unique_id=969434094]
+layout_mode = 0
+offset_left = 522.0
+offset_top = 388.0
+offset_right = 640.0
+offset_bottom = 458.0
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_8qkna")
+theme_override_styles/hover = SubResource("StyleBoxFlat_s3gtt")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_wh5ob")
+text = "Restart"
+
 [node name="InvincibilityTimer" type="Timer" parent="." unique_id=22345695]
 one_shot = true
 
+[node name="BlinkTimer" type="Timer" parent="." unique_id=304042073]
+wait_time = 0.1
+
+[node name="Node" type="Node" parent="." unique_id=349723155]
+
+[node name="DamageSound" type="AudioStreamPlayer2D" parent="Node" unique_id=1265555845]
+rotation = 3.1415927
+scale = Vector2(1, -1)
+stream = ExtResource("9_82prv")
+volume_db = 10.0
+pitch_scale = 2.0
+
+[node name="JumpSound" type="AudioStreamPlayer2D" parent="Node" unique_id=1478426182]
+rotation = 3.1415927
+scale = Vector2(1, -1)
+stream = ExtResource("9_s3gtt")
+volume_db = -5.0
+
+[node name="DeathSound" type="AudioStreamPlayer2D" parent="Node" unique_id=499595276]
+process_mode = 3
+stream = ExtResource("10_wh5ob")
+
+[connection signal="pressed" from="UI/GameOverScreen/Restart" to="." method="_on_restart_pressed"]
 [connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]
+[connection signal="timeout" from="BlinkTimer" to="." method="_on_blink_timer_timeout"]

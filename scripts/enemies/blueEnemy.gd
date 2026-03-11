@@ -2,6 +2,7 @@ extends Node2D
 @onready var ray_cast_right: RayCast2D = $RayCastRight
 @onready var ray_cast_left: RayCast2D = $RayCastLeft
 @onready var animated_sprite_2d: AnimatedSprite2D = $AnimatedSprite2D
+@onready var stump_sound: AudioStreamPlayer2D = $StumpSound
 
 const SPEED = 60
 
@@ -23,8 +24,15 @@ func _process(delta: float) -> void:
 		position.x += direction * SPEED * delta
 
 func _on_killzone_body_entered(body: Node2D) -> void:
+	# 1. Safety Check: If the enemy is ALREADY stunned, ignore the player entirely!
+	if is_stunned:
+		return
+
 	if body.has_method("take_damage"):
 		if body.is_invincible == false:
+			if body.velocity.y > 0 and body.global_position.y < global_position.y:
+				return 
+				
 			body.jump_launch(-300)
 			body.take_damage(2)
 
@@ -33,7 +41,7 @@ func _on_stunzone_body_entered(body: Node2D) -> void:
 	if body.has_method("jump_launch"):
 		if body.is_invincible == false:
 			if body.velocity.y > 0: 
-				
+				stump_sound.play()
 				is_stunned = true
 				animated_sprite_2d.play("stun")
 				body.jump_launch(-300)

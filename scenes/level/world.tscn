@@ -11,6 +11,8 @@
 [ext_resource type="PackedScene" uid="uid://cxw043qt8pau1" path="res://scenes/harazards/cannon.tscn" id="9_dxy30"]
 [ext_resource type="PackedScene" uid="uid://bgtty0o56expr" path="res://scenes/harazards/spikes.tscn" id="10_klaio"]
 [ext_resource type="PackedScene" uid="uid://cn1ipkn12ge15" path="res://scenes/enemies/blue_enemy.tscn" id="11_vj4f5"]
+[ext_resource type="AudioStream" uid="uid://ciduggkjh6tpb" path="res://assets/Sounds/mainSOng.mp3" id="12_awd87"]
+[ext_resource type="PackedScene" uid="uid://dhskym07is6fg" path="res://scenes/enemies/fly_enemy.tscn" id="13_5j20k"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_k0juu"]
 texture = ExtResource("2_awd87")
@@ -459,3 +461,11 @@ position = Vector2(426, -10)
 
 [node name="blueEnemy" parent="." unique_id=2046910839 instance=ExtResource("11_vj4f5")]
 position = Vector2(51, 3)
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="." unique_id=35059954]
+stream = ExtResource("12_awd87")
+volume_db = -5.0
+autoplay = true
+
+[node name="fly_enemy" parent="." unique_id=1757338939 instance=ExtResource("13_5j20k")]
+position = Vector2(423, -140)

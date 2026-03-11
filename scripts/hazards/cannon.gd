@@ -1,6 +1,7 @@
 extends Node2D
 
 @export var bullet_scene: PackedScene 
+@onready var shoot_sound: AudioStreamPlayer2D = $ShootSound
 
 func shoot() -> void:
 	var bullet = bullet_scene.instantiate()
@@ -26,4 +27,5 @@ func shoot() -> void:
 
 
 func _on_timer_timeout() -> void:
+	shoot_sound.play()
 	shoot() # Replace with function body.

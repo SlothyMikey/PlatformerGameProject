@@ -1,10 +1,13 @@
 extends CharacterBody2D
-
+@onready var jump_sound: AudioStreamPlayer2D = $Node/JumpSound
+@onready var death_sound: AudioStreamPlayer2D = $Node/DeathSound
+@onready var damage_sound: AudioStreamPlayer2D = $Node/DamageSound
 
 const SPEED = 150.0
 const JUMP_VELOCITY = -320.0
 const jump_pad_height = -500.0
 var is_invincible: bool = false
+var is_dead: bool = false
 
 var health: int = 6
 var coins: int = 0
@@ -20,34 +23,61 @@ func add_coin() -> void:
 	$UI/CoinCounter/CoinText.text = str(coins)
 	
 func take_damage(damage_amount: int):
-	# 1. Are we currently invincible? If yes, ignore the hit and stop the function!
-	if is_invincible:
+	# 1. Ignore hits if already invincible or already dead!
+	if is_invincible or is_dead: 
 		return 
 		
-	# 2. Otherwise, take the damage as normal!
 	health -= damage_amount
+	if health < 0:
+		health = 0
+		 
+	damage_sound.play()
 	print("Ouch! Player health is now: ", health)
-
 	$UI/HealthBar.update_hearts(health)
 	
-	# 3. Turn on the forcefield and start the 1-second stopwatch!
+	# --- THE DELAYED DEATH SEQUENCE ---
+	if health <= 0:
+		is_dead = true # Lock controls
+		
+		if death_sound.playing == false:
+			death_sound.play()
+			
+		# Turn off collision so they fall through the floor and obstacles
+		$CollisionShape2D.set_deferred("disabled", true)
+		
+		# Give them a classic "death hop"
+		velocity.y = -300 
+		
+		# Stop blinking so they are visible while falling
+		$BlinkTimer.stop()
+		$AnimatedSprite2D.visible = true
+		
+		# THE DELAY: Wait 1.5 seconds while they fall off screen
+		await get_tree().create_timer(1.5).timeout
+		
+		# Now show the menu and pause the game!
+		$UI/GameOverScreen.show()
+		get_tree().paused = true
+		return 
+	# ----------------------------------
+
+	# IF STILL ALIVE, trigger standard damage effects!
 	is_invincible = true
 	$InvincibilityTimer.start()
+	$BlinkTimer.start()
 	
-	# --- THE HURT EFFECT ---
 	$AnimatedSprite2D.modulate = Color.RED
 	var tween = create_tween()
 	tween.tween_property($AnimatedSprite2D, "modulate", Color.WHITE, 0.3)
-	# -----------------------
-
-	if health <= 0:
-		print("Player Died!")
-		get_tree().reload_current_scene()
 
 func _physics_process(delta: float) -> void:
 	# Add the gravity.
 	if not is_on_floor():
 		velocity += get_gravity() * delta
+		
+	if is_dead:
+		move_and_slide()
+		return
 		
 	if velocity.x == 0:
 		$AnimatedSprite2D.play("idle")
@@ -57,6 +87,7 @@ func _physics_process(delta: float) -> void:
 
 	# Handle jump.
 	if Input.is_action_just_pressed("jump") and is_on_floor():
+		jump_sound.play()
 		velocity.y = JUMP_VELOCITY
 
 	# Get the input direction and handle the movement/deceleration.
@@ -78,3 +109,33 @@ func _physics_process(delta: float) -> void:
 
 func _on_invincibility_timer_timeout() -> void:
 	is_invincible = false
+	$BlinkTimer.stop() 
+	$AnimatedSprite2D.visible = true
+
+
+func _on_restart_pressed() -> void:
+	get_tree().paused = false
+	get_tree().reload_current_scene()
+
+
+func _on_blink_timer_timeout() -> void:
+	$AnimatedSprite2D.visible = not $AnimatedSprite2D.visible
+	
+func instant_death():
+	# 1. Instantly set health to 0
+	health = 0
+	print("Fell off the map!")
+	
+	# 2. Update the UI to show all empty hearts
+	if $UI/HealthBar != null:
+		$UI/HealthBar.update_hearts(health)
+	
+	# 3. PLAY THE SOUND!
+	if death_sound.playing == false:
+		death_sound.play()
+	
+	# 3. Show the Game Over screen and pause the game
+	if $UI/GameOverScreen != null:
+		$UI/GameOverScreen.show()
+		
+	get_tree().paused = true
