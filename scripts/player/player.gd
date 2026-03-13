@@ -10,6 +10,7 @@ var is_invincible: bool = false
 var is_dead: bool = false
 
 var health: int = 6
+var max_health: int = 6
 var coins: int = 0
 
 func _ready() -> void:
@@ -116,10 +117,30 @@ func _on_invincibility_timer_timeout() -> void:
 func _on_restart_pressed() -> void:
 	get_tree().paused = false
 	get_tree().reload_current_scene()
+	
+func heal_to_full():
+	health = max_health
+	$UI/HealthBar.update_hearts(health)
+	print("Healed to full!")
 
 
 func _on_blink_timer_timeout() -> void:
 	$AnimatedSprite2D.visible = not $AnimatedSprite2D.visible
+
+func reset_coins() -> void:
+	coins = 0
+	
+	# Update the UI to show 0!
+	if $UI/CoinCounter/CoinText != null:
+		$UI/CoinCounter/CoinText.text = str(coins)
+		
+func add_bonus_coins(amount: int) -> void:
+	# Add the specific amount to our total
+	coins += amount
+	
+	# Update the UI!
+	if $UI/CoinCounter/CoinText != null:
+		$UI/CoinCounter/CoinText.text = str(coins)
 	
 func instant_death():
 	# 1. Instantly set health to 0

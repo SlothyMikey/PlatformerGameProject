@@ -1,0 +1,46 @@
+[gd_scene format=3 uid="uid://b6kpmfwruc4yb"]
+
+[ext_resource type="Script" uid="uid://dib8orelf85ws" path="res://scripts/enemies/blueEnemy.gd" id="1_j8s3d"]
+[ext_resource type="Texture2D" uid="uid://e18708o1h24l" path="res://assets/Tiles/Characters/tile_0015.png" id="2_14ruw"]
+[ext_resource type="Texture2D" uid="uid://b47jq7njqdev1" path="res://assets/Tiles/Characters/tile_0016.png" id="3_k0mqs"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ejd8y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_14ruw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_k0mqs")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q6d1q"]
+size = Vector2(15, 19)
+
+[node name="spikeEnemy" type="Node2D" unique_id=2046910839]
+script = ExtResource("1_j8s3d")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1617511611]
+position = Vector2(0, -5)
+sprite_frames = SubResource("SpriteFrames_ejd8y")
+autoplay = "default"
+frame_progress = 0.7492796
+
+[node name="killzone" type="Area2D" parent="." unique_id=339164384]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="killzone" unique_id=1122501061]
+position = Vector2(-0.5, -2.5)
+shape = SubResource("RectangleShape2D_q6d1q")
+
+[node name="RayCastRight" type="RayCast2D" parent="." unique_id=971410425]
+target_position = Vector2(11, 0)
+
+[node name="RayCastLeft" type="RayCast2D" parent="." unique_id=1398405854]
+target_position = Vector2(-12, 0)
+
+[connection signal="body_entered" from="killzone" to="." method="_on_killzone_body_entered"]

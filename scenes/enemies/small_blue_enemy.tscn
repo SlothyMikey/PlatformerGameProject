@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://bifxvr4bw0x3k"]
+
+[ext_resource type="Script" uid="uid://dib8orelf85ws" path="res://scripts/enemies/blueEnemy.gd" id="1_givlk"]
+[ext_resource type="Texture2D" uid="uid://c1ui3ej3wh1vv" path="res://assets/Tiles/Characters/tile_0018.png" id="2_givlk"]
+[ext_resource type="Texture2D" uid="uid://csc7s8wf3a3h6" path="res://assets/Tiles/Characters/tile_0019.png" id="3_j3dcj"]
+[ext_resource type="Texture2D" uid="uid://dcya7gycvtv5q" path="res://assets/Tiles/Characters/tile_0020.png" id="4_x8xa8"]
+[ext_resource type="AudioStream" uid="uid://bhq04sajl3ijk" path="res://assets/Sounds/stump.mp3" id="5_3it11"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ejd8y"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_givlk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_j3dcj")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_x8xa8")
+}],
+"loop": true,
+"name": &"stun",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q6d1q"]
+size = Vector2(15, 12.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2gm4t"]
+size = Vector2(13, 1)
+
+[node name="smallBueEnemy" type="Node2D" unique_id=2046910839]
+script = ExtResource("1_givlk")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=1617511611]
+position = Vector2(0, -6)
+sprite_frames = SubResource("SpriteFrames_ejd8y")
+autoplay = "default"
+
+[node name="killzone" type="Area2D" parent="." unique_id=339164384]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="killzone" unique_id=1122501061]
+position = Vector2(0.5, 0)
+shape = SubResource("RectangleShape2D_q6d1q")
+
+[node name="RayCastRight" type="RayCast2D" parent="." unique_id=971410425]
+target_position = Vector2(11, 0)
+
+[node name="RayCastLeft" type="RayCast2D" parent="." unique_id=1398405854]
+target_position = Vector2(-10, 0)
+
+[node name="stunzone" type="Area2D" parent="." unique_id=1466297543]
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="stunzone" unique_id=281418581]
+position = Vector2(0.5, -7)
+shape = SubResource("RectangleShape2D_2gm4t")
+
+[node name="StumpSound" type="AudioStreamPlayer2D" parent="." unique_id=321774793]
+stream = ExtResource("5_3it11")
+pitch_scale = 2.0
+
+[connection signal="body_entered" from="killzone" to="." method="_on_killzone_body_entered"]
+[connection signal="body_entered" from="stunzone" to="." method="_on_stunzone_body_entered"]

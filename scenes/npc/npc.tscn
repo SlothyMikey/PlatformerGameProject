@@ -1,0 +1,83 @@
+[gd_scene format=3 uid="uid://b6w3aiwlf0f4u"]
+
+[ext_resource type="Script" uid="uid://dqb3tqq1wnojk" path="res://scripts/npc/npc.gd" id="1_pcwmf"]
+[ext_resource type="Texture2D" uid="uid://drffr8duo83if" path="res://assets/Tiles/Characters/tile_0006.png" id="1_sspvn"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_sspvn"]
+radius = 13.0
+
+[node name="Area2D" type="Area2D" unique_id=1488681792]
+collision_mask = 2
+script = ExtResource("1_pcwmf")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=951242993]
+texture = ExtResource("1_sspvn")
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1605024013]
+shape = SubResource("CircleShape2D_sspvn")
+
+[node name="DialogueUI" type="CanvasLayer" parent="." unique_id=1344622526]
+process_mode = 3
+visible = false
+
+[node name="Panel" type="ColorRect" parent="DialogueUI" unique_id=953875189]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 0.9882353)
+
+[node name="Label" type="Label" parent="DialogueUI/Panel" unique_id=528928679]
+layout_mode = 0
+offset_left = 257.0
+offset_top = 156.0
+offset_right = 877.0
+offset_bottom = 251.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 64
+text = "Is taiwan a country?"
+
+[node name="Label2" type="Label" parent="DialogueUI/Panel" unique_id=1074551252]
+layout_mode = 0
+offset_left = 685.0
+offset_top = 260.0
+offset_right = 916.0
+offset_bottom = 355.0
+theme_override_colors/font_color = Color(0, 1, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "+ 99 Credit Score
++ Back to Full Heart
++ 20 coins"
+
+[node name="Label3" type="Label" parent="DialogueUI/Panel" unique_id=395515319]
+layout_mode = 0
+offset_left = 254.0
+offset_top = 264.0
+offset_right = 494.0
+offset_bottom = 377.0
+theme_override_colors/font_color = Color(1, 0, 0, 1)
+theme_override_font_sizes/font_size = 24
+text = "- 99 Credit Score
+- 1/2 heart
+- All coins gone"
+
+[node name="ButtonA" type="Button" parent="DialogueUI/Panel" unique_id=2065138253]
+layout_mode = 0
+offset_left = 252.0
+offset_top = 398.0
+offset_right = 430.0
+offset_bottom = 474.0
+theme_override_font_sizes/font_size = 32
+text = "YES"
+
+[node name="ButtonB" type="Button" parent="DialogueUI/Panel" unique_id=1745057862]
+layout_mode = 0
+offset_left = 688.0
+offset_top = 396.0
+offset_right = 866.0
+offset_bottom = 474.0
+theme_override_font_sizes/font_size = 32
+text = "NO"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="pressed" from="DialogueUI/Panel/ButtonA" to="." method="_on_button_a_pressed"]
+[connection signal="pressed" from="DialogueUI/Panel/ButtonB" to="." method="_on_button_b_pressed"]

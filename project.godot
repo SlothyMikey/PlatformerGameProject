@@ -18,6 +18,14 @@ config/features=PackedStringArray("4.6", "Forward Plus")
 
 GameManager="*uid://dqa3kadl0x15d"
 
+[display]
+
+window/stretch/mode="viewport"
+
+[global_group]
+
+Player=""
+
 [input]
 
 left={

@@ -36,13 +36,13 @@ sprite_frames = SubResource("SpriteFrames_22shy")
 autoplay = "default"
 frame_progress = 0.7672582
 
-[node name="SpawnLeft" type="Marker2D" parent="." unique_id=1318027704]
+[node name="SpawnRight" type="Marker2D" parent="." unique_id=1318027704]
 position = Vector2(-8, -4)
 
 [node name="SpawnCenter" type="Marker2D" parent="." unique_id=1247252733]
 position = Vector2(0, -6)
 
-[node name="SpawnRight" type="Marker2D" parent="." unique_id=1545077787]
+[node name="SpawnLeft" type="Marker2D" parent="." unique_id=1545077787]
 position = Vector2(8, -4)
 
 [node name="Timer" type="Timer" parent="." unique_id=2019398978]

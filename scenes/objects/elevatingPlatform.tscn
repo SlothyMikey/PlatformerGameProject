@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://c2j8cv8jd2oc2"]
+
+[ext_resource type="Script" uid="uid://b23hk61a3lp1" path="res://scripts/objects/elevating_platform.gd" id="1_myltw"]
+[ext_resource type="Texture2D" uid="uid://b1axrsptk1co8" path="res://assets/Tiles/tile_0081.png" id="1_ox843"]
+[ext_resource type="Texture2D" uid="uid://xivkk2trbawr" path="res://assets/Tiles/tile_0082.png" id="2_myltw"]
+[ext_resource type="Texture2D" uid="uid://cqgci8aqp7we1" path="res://assets/Tiles/tile_0083.png" id="3_iemjl"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h0ei4"]
+size = Vector2(126, 18)
+
+[node name="AnimatableBody2D" type="AnimatableBody2D" unique_id=1310782793]
+script = ExtResource("1_myltw")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=883382989]
+position = Vector2(-54, 1)
+texture = ExtResource("1_ox843")
+
+[node name="Sprite2D2" type="Sprite2D" parent="." unique_id=1722499729]
+position = Vector2(18, 1)
+texture = ExtResource("2_myltw")
+
+[node name="Sprite2D4" type="Sprite2D" parent="." unique_id=1924862906]
+position = Vector2(0, 1)
+texture = ExtResource("2_myltw")
+
+[node name="Sprite2D5" type="Sprite2D" parent="." unique_id=978095283]
+position = Vector2(36, 1)
+texture = ExtResource("2_myltw")
+
+[node name="Sprite2D6" type="Sprite2D" parent="." unique_id=1906765535]
+position = Vector2(-18, 1)
+texture = ExtResource("2_myltw")
+
+[node name="Sprite2D7" type="Sprite2D" parent="." unique_id=2133609217]
+position = Vector2(-36, 1)
+texture = ExtResource("2_myltw")
+
+[node name="Sprite2D3" type="Sprite2D" parent="." unique_id=1271133874]
+position = Vector2(54, 1)
+texture = ExtResource("3_iemjl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1007649121]
+position = Vector2(0, 1)
+shape = SubResource("RectangleShape2D_h0ei4")

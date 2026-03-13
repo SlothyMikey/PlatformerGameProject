@@ -43,7 +43,7 @@ animations = [{
 height = 24.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8qkna"]
-bg_color = Color(0, 0.72741455, 0.11352586, 1)
+bg_color = Color(0, 0.5058824, 0.11372549, 1)
 border_color = Color(0.99976355, 0.99410397, 0.9944443, 1)
 corner_radius_top_left = 12
 corner_radius_top_right = 12
@@ -52,11 +52,19 @@ corner_radius_bottom_left = 12
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_s3gtt"]
 bg_color = Color(6.738305e-07, 0.7218168, 0.25129366, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wh5ob"]
 bg_color = Color(0, 0.463713, 0.16178647, 1)
+corner_radius_top_left = 12
+corner_radius_top_right = 12
+corner_radius_bottom_right = 12
+corner_radius_bottom_left = 12
 
-[node name="PlayerCharacter" type="CharacterBody2D" unique_id=1325053088]
+[node name="PlayerCharacter" type="CharacterBody2D" unique_id=1325053088 groups=["Player"]]
 scale = Vector2(-1, 1)
 collision_layer = 2
 script = ExtResource("1_d3uoy")
@@ -160,16 +168,19 @@ scale = Vector2(1, -1)
 stream = ExtResource("9_82prv")
 volume_db = 10.0
 pitch_scale = 2.0
+max_distance = 2000000.0
 
 [node name="JumpSound" type="AudioStreamPlayer2D" parent="Node" unique_id=1478426182]
 rotation = 3.1415927
 scale = Vector2(1, -1)
 stream = ExtResource("9_s3gtt")
 volume_db = -5.0
+max_distance = 2000000000.0
 
 [node name="DeathSound" type="AudioStreamPlayer2D" parent="Node" unique_id=499595276]
 process_mode = 3
 stream = ExtResource("10_wh5ob")
+max_distance = 200000000.0
 
 [connection signal="pressed" from="UI/GameOverScreen/Restart" to="." method="_on_restart_pressed"]
 [connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]
