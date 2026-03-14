@@ -13,6 +13,8 @@ var health: int = 6
 var max_health: int = 6
 var coins: int = 0
 
+var has_diesel: bool = false
+
 func _ready() -> void:
 	$UI/HealthBar.update_hearts(health)
 
@@ -160,3 +162,27 @@ func instant_death():
 		$UI/GameOverScreen.show()
 		
 	get_tree().paused = true
+	
+func buy_diesel(cost: int) -> bool:
+	# 1. Check if we have enough money!
+	if coins >= cost:
+		
+		# 2. Take the coins away and update the UI
+		coins -= cost
+		if $UI/CoinCounter/CoinText != null:
+			$UI/CoinCounter/CoinText.text = str(coins)
+			
+		# 3. Put the diesel in our inventory
+		has_diesel = true
+		
+		# --- NEW: SHOW THE UI ICON! ---
+		if $UI/DieselIcon != null:
+			$UI/DieselIcon.show()
+		# ------------------------------
+			
+		print("Transaction complete! Diesel acquired.")
+		return true 
+		
+	else:
+		print("Not enough money!")
+		return false

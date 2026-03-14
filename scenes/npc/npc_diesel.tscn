@@ -1,0 +1,60 @@
+[gd_scene format=3 uid="uid://c8hgww5p75qfy"]
+
+[ext_resource type="Texture2D" uid="uid://bdcm4i125nrwu" path="res://assets/Tiles/Characters/tile_0004.png" id="1_55eap"]
+[ext_resource type="Script" uid="uid://dlo3hbxdfk5av" path="res://scripts/npc/npc_diesel.gd" id="1_dyk7j"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_4eoqw"]
+radius = 13.0
+
+[node name="Area2D" type="Area2D" unique_id=998598247]
+collision_mask = 2
+script = ExtResource("1_dyk7j")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1541539412]
+texture = ExtResource("1_55eap")
+flip_h = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=85228892]
+shape = SubResource("CircleShape2D_4eoqw")
+
+[node name="DialogueUI" type="CanvasLayer" parent="." unique_id=3505379]
+process_mode = 3
+visible = false
+
+[node name="Panel" type="ColorRect" parent="DialogueUI" unique_id=999877030]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0, 0, 0, 0.9882353)
+
+[node name="Label" type="Label" parent="DialogueUI/Panel" unique_id=779568120]
+layout_mode = 0
+offset_top = 194.0
+offset_right = 1153.0
+offset_bottom = 282.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_font_sizes/font_size = 64
+text = "I'll trade diesel for 54 coins"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ButtonA" type="Button" parent="DialogueUI/Panel" unique_id=286517579]
+layout_mode = 0
+offset_left = 252.0
+offset_top = 398.0
+offset_right = 430.0
+offset_bottom = 474.0
+theme_override_font_sizes/font_size = 32
+text = "Buy"
+
+[node name="ButtonB" type="Button" parent="DialogueUI/Panel" unique_id=1360959437]
+layout_mode = 0
+offset_left = 688.0
+offset_top = 396.0
+offset_right = 866.0
+offset_bottom = 474.0
+theme_override_font_sizes/font_size = 32
+text = "Leave"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="pressed" from="DialogueUI/Panel/ButtonA" to="." method="_on_button_a_pressed"]
+[connection signal="pressed" from="DialogueUI/Panel/ButtonB" to="." method="_on_button_b_pressed"]

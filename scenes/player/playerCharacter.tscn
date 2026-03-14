@@ -9,6 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://b8no78dv6y054" path="res://assets/Tiles/tile_0046.png" id="7_r7e07"]
 [ext_resource type="Texture2D" uid="uid://cpu4fkgnil8f6" path="res://assets/Tiles/tile_0151.png" id="8_r7e07"]
 [ext_resource type="AudioStream" uid="uid://bwdadofq4seed" path="res://assets/Sounds/oof.mp3" id="9_82prv"]
+[ext_resource type="Texture2D" uid="uid://nh6qq6nc2le6" path="res://assets/Tiles/spaceBuilding_002.png" id="9_550ko"]
 [ext_resource type="AudioStream" uid="uid://dcf7eeavsg0u0" path="res://assets/Sounds/jump.wav" id="9_s3gtt"]
 [ext_resource type="AudioStream" uid="uid://dq8ckryqh21p6" path="res://assets/Sounds/death.wav" id="10_wh5ob"]
 
@@ -154,6 +155,48 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_s3gtt")
 theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_wh5ob")
 text = "Restart"
 
+[node name="WinScreen" type="ColorRect" parent="UI" unique_id=1885941758]
+process_mode = 3
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="Label" type="Label" parent="UI/WinScreen" unique_id=580663162]
+layout_mode = 0
+offset_top = 132.0
+offset_right = 1151.0
+offset_bottom = 485.0
+theme_override_font_sizes/font_size = 86
+text = "ESCAPE SUCCESSFUL!
+YOU WIN"
+horizontal_alignment = 1
+
+[node name="Restart" type="Button" parent="UI/WinScreen" unique_id=1630662560]
+layout_mode = 0
+offset_left = 485.0
+offset_top = 419.0
+offset_right = 651.0
+offset_bottom = 489.0
+theme_override_font_sizes/font_size = 20
+theme_override_styles/normal = SubResource("StyleBoxFlat_8qkna")
+theme_override_styles/hover = SubResource("StyleBoxFlat_s3gtt")
+theme_override_styles/hover_pressed = SubResource("StyleBoxFlat_wh5ob")
+text = "Play Again"
+
+[node name="DieselIcon" type="TextureRect" parent="UI" unique_id=1118666006]
+visible = false
+offset_left = 54.72772
+offset_top = 550.17834
+offset_right = 98.650085
+offset_bottom = 627.2073
+rotation = 0.5235988
+texture = ExtResource("9_550ko")
+expand_mode = 1
+
 [node name="InvincibilityTimer" type="Timer" parent="." unique_id=22345695]
 one_shot = true
 
@@ -183,5 +226,6 @@ stream = ExtResource("10_wh5ob")
 max_distance = 200000000.0
 
 [connection signal="pressed" from="UI/GameOverScreen/Restart" to="." method="_on_restart_pressed"]
+[connection signal="pressed" from="UI/WinScreen/Restart" to="." method="_on_restart_pressed"]
 [connection signal="timeout" from="InvincibilityTimer" to="." method="_on_invincibility_timer_timeout"]
 [connection signal="timeout" from="BlinkTimer" to="." method="_on_blink_timer_timeout"]

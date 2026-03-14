@@ -1,0 +1,38 @@
+[gd_scene format=3 uid="uid://ct4olq2i48js8"]
+
+[ext_resource type="Texture2D" uid="uid://bfmap7cj8onfc" path="res://assets/Tiles/Ship/spaceRockets_003.png" id="1_a4j8e"]
+[ext_resource type="Script" uid="uid://b73wkssop1s8h" path="res://scripts/objects/ship.gd" id="1_x2d0j"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_a4j8e"]
+radius = 16.0
+height = 92.0
+
+[node name="Ship" type="Area2D" unique_id=1484672626]
+collision_mask = 2
+script = ExtResource("1_x2d0j")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1000838490]
+position = Vector2(66.99999, 69.99999)
+scale = Vector2(0.27118644, 0.2825397)
+texture = ExtResource("1_a4j8e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=385861590]
+position = Vector2(67, 71)
+shape = SubResource("CapsuleShape2D_a4j8e")
+
+[node name="warningLabel" type="Label" parent="." unique_id=157490386]
+visible = false
+offset_left = 19.0
+offset_top = 3.0
+offset_right = 116.0
+offset_bottom = 26.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+text = "Need Diesel!"
+metadata/_edit_use_anchors_ = true
+
+[node name="Timer" type="Timer" parent="." unique_id=835640702]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

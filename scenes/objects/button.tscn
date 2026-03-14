@@ -38,3 +38,4 @@ sprite_frames = SubResource("SpriteFrames_bejyh")
 shape = SubResource("RectangleShape2D_2wxwk")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
